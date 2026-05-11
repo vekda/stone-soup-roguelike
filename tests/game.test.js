@@ -137,6 +137,63 @@ test('using item is instant and does not trigger enemy turn or cooldown tick', (
   assert.equal(state.player.skill.remaining, 2);
 });
 
+test('v0.2 data adds special enemies new tactical items and a mini boss', () => {
+  const enemyIds = new Set(ENEMY_TYPES.map((e) => e.id));
+  for (const id of ['yeast_bloat', 'soup_witch', 'boiler_golem', 'salt_crab_king']) assert.ok(enemyIds.has(id), `missing enemy ${id}`);
+  const specialEnemies = ENEMY_TYPES.filter((e) => e.ability);
+  assert.ok(specialEnemies.length >= 3);
+  assert.ok(ENEMY_TYPES.some((e) => e.role === 'miniBoss' && e.id === 'salt_crab_king'));
+
+  const itemIds = new Set(ITEM_TYPES.map((i) => i.id));
+  for (const id of ['chili_oil', 'plum_ice', 'yeast_powder', 'salt_bag', 'thick_soup']) assert.ok(itemIds.has(id), `missing item ${id}`);
+});
+
+test('chili oil damages adjacent enemies without consuming a monster turn', () => {
+  const state = newGame('fighter', 410);
+  state.enemies = [
+    { id: 'rat', name: '近处鼠', hp: 12, maxHp: 12, attack: 3, defense: 0, xp: 1, sprite: 'enemy_rat', x: state.player.x + 1, y: state.player.y },
+    { id: 'rat', name: '远处鼠', hp: 12, maxHp: 12, attack: 3, defense: 0, xp: 1, sprite: 'enemy_rat', x: state.player.x + 5, y: state.player.y },
+  ];
+  state.player.hp = 20;
+  state.player.skill.remaining = 2;
+  state.player.inventory = [{ id: 'chili_oil', name: '辣椒油瓶', kind: 'blast', damage: 7, radius: 1, sprite: 'item_chili_oil' }];
+  useItem(state, 0);
+  assert.equal(state.enemies[0].hp, 5);
+  assert.equal(state.enemies[1].hp, 12);
+  assert.equal(state.player.hp, 20);
+  assert.equal(state.player.skill.remaining, 2);
+});
+
+test('yeast powder summons a temporary dough ally as an instant item', () => {
+  const state = newGame('fighter', 411);
+  state.enemies = [];
+  state.player.inventory = [{ id: 'yeast_powder', name: '发酵粉', kind: 'summon', sprite: 'item_yeast_powder' }];
+  useItem(state, 0);
+  assert.equal(state.summons.length, 1);
+  assert.equal(state.summons[0].sprite, 'summon_dough');
+  assert.ok(state.summons[0].temporary);
+});
+
+test('yeast bloat explodes on death and hurts adjacent player', () => {
+  const state = newGame('fighter', 412);
+  state.player.hp = 20;
+  state.enemies = [{ id: 'yeast_bloat', name: '胀气酵母', hp: 1, maxHp: 1, attack: 0, defense: 0, xp: 1, sprite: 'enemy_yeast_bloat', ability: 'deathBurst', burstDamage: 4, x: state.player.x + 1, y: state.player.y }];
+  movePlayer(state, 1, 0);
+  assert.equal(state.enemies.length, 0);
+  assert.ok(state.player.hp <= 16);
+});
+
+test('soup witch heals a nearby wounded ally during enemy turn', () => {
+  const state = newGame('fighter', 413);
+  state.player.hp = state.player.maxHp;
+  state.enemies = [
+    { id: 'soup_witch', name: '汤巫师', hp: 10, maxHp: 10, attack: 0, defense: 0, xp: 1, sprite: 'enemy_soup_witch', ability: 'healAlly', healAmount: 4, x: state.player.x + 5, y: state.player.y },
+    { id: 'orc', name: '受伤兽人', hp: 5, maxHp: 19, attack: 0, defense: 0, xp: 1, sprite: 'enemy_orc', x: state.player.x + 4, y: state.player.y },
+  ];
+  waitTurn(state);
+  assert.ok(state.enemies.find((e) => e.name === '受伤兽人').hp > 5);
+});
+
 test('R key returns to class select menu instead of immediately rerolling current dungeon', () => {
   const source = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8');
   assert.match(source, /const\s+returnToMenu\s*=\s*\(\)\s*=>\s*\{/);

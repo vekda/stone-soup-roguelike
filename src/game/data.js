@@ -65,8 +65,12 @@ export const CLASSES = {
 export const ENEMY_TYPES = [
   { id: 'rat', name: '地牢鼠', hp: 8, attack: 3, defense: 0, xp: 3, sprite: 'enemy_rat', depth: 1 },
   { id: 'goblin', name: '盐沼哥布林', hp: 13, attack: 5, defense: 1, xp: 6, sprite: 'enemy_goblin', depth: 1 },
+  { id: 'yeast_bloat', name: '胀气酵母', hp: 10, attack: 4, defense: 0, xp: 7, sprite: 'enemy_yeast_bloat', depth: 1, ability: 'deathBurst', burstDamage: 4, desc: '死亡时会爆开，伤害相邻单位。' },
   { id: 'orc', name: '熏肉兽人', hp: 19, attack: 7, defense: 2, xp: 10, sprite: 'enemy_orc', depth: 2 },
+  { id: 'soup_witch', name: '汤巫师', hp: 16, attack: 4, defense: 1, xp: 12, sprite: 'enemy_soup_witch', depth: 2, ability: 'healAlly', healAmount: 4, desc: '会给附近受伤怪物续汤回血。' },
   { id: 'troll', name: '汤锅巨魔', hp: 28, attack: 9, defense: 3, xp: 16, sprite: 'enemy_troll', depth: 3 },
+  { id: 'boiler_golem', name: '锅炉傀儡', hp: 32, attack: 8, defense: 4, xp: 20, sprite: 'enemy_boiler_golem', depth: 3, ability: 'heavyArmor', desc: '高防慢压迫，适合用技能或道具处理。' },
+  { id: 'salt_crab_king', name: '盐沼蟹王', hp: 38, attack: 10, defense: 3, xp: 30, sprite: 'enemy_salt_crab_king', depth: 3, role: 'miniBoss', ability: 'sideSwipe', desc: '第一个小 Boss，横行霸道。' },
   { id: 'dragon', name: '石汤古龙', hp: 45, attack: 12, defense: 4, xp: 50, sprite: 'enemy_dragon', depth: 4 },
 ];
 
@@ -76,4 +80,9 @@ export const ITEM_TYPES = [
   { id: 'sword', name: '铁菜刀', kind: 'weapon', attack: 2, sprite: 'item_sword', desc: '永久攻击 +2。' },
   { id: 'armor', name: '锅盖甲', kind: 'armor', defense: 1, sprite: 'item_armor', desc: '永久防御 +1。' },
   { id: 'scroll', name: '火焰卷轴', kind: 'scroll', damage: 10, sprite: 'item_scroll', desc: '灼烧视野内所有敌人。' },
+  { id: 'chili_oil', name: '辣椒油瓶', kind: 'blast', damage: 7, radius: 1, sprite: 'item_chili_oil', desc: '泼洒爆辣油，伤害身边一圈敌人。' },
+  { id: 'plum_ice', name: '冰镇酸梅汤', kind: 'guard', defenseBonus: 2, turns: 3, sprite: 'item_plum_ice', desc: '获得 3 回合临时防御。' },
+  { id: 'yeast_powder', name: '发酵粉', kind: 'summon', sprite: 'item_yeast_powder', desc: '瞬间发酵一个临时面团伙伴。' },
+  { id: 'salt_bag', name: '净盐袋', kind: 'cleanse', sprite: 'item_salt_bag', desc: '清除负面状态。' },
+  { id: 'thick_soup', name: '浓汤盅', kind: 'heal_guard', amount: 8, defenseBonus: 1, turns: 2, sprite: 'item_thick_soup', desc: '回复生命，并短暂增加防御。' },
 ];

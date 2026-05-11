@@ -12,10 +12,19 @@ export const sprites = {
   "enemy_orc": "/assets/enemy_orc.svg",
   "enemy_troll": "/assets/enemy_troll.svg",
   "enemy_dragon": "/assets/enemy_dragon.svg",
+  "enemy_yeast_bloat": "/assets/enemy_yeast_bloat.svg",
+  "enemy_soup_witch": "/assets/enemy_soup_witch.svg",
+  "enemy_boiler_golem": "/assets/enemy_boiler_golem.svg",
+  "enemy_salt_crab_king": "/assets/enemy_salt_crab_king.svg",
   "summon_dough": "/assets/summon_dough.svg",
   "item_potion": "/assets/item_potion.svg",
   "item_bread": "/assets/item_bread.svg",
   "item_sword": "/assets/item_sword.svg",
   "item_armor": "/assets/item_armor.svg",
-  "item_scroll": "/assets/item_scroll.svg"
+  "item_scroll": "/assets/item_scroll.svg",
+  "item_chili_oil": "/assets/item_chili_oil.svg",
+  "item_plum_ice": "/assets/item_plum_ice.svg",
+  "item_yeast_powder": "/assets/item_yeast_powder.svg",
+  "item_salt_bag": "/assets/item_salt_bag.svg",
+  "item_thick_soup": "/assets/item_thick_soup.svg"
 };

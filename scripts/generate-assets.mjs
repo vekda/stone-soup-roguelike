@@ -22,12 +22,21 @@ const sprites = {
   enemy_orc: { bg: 'none', pixels: [[7,7,18,13,'#6aa84f'],[4,12,5,6,'#6aa84f'],[24,12,5,6,'#6aa84f'],[11,12,3,3,P.black],[20,12,3,3,P.black],[8,21,17,8,P.grey],[3,19,5,10,P.brown],[25,19,4,10,P.brown],[11,29,4,3,P.outline],[20,29,4,3,P.outline]] },
   enemy_troll: { bg: 'none', pixels: [[5,6,22,17,'#70885b'],[8,3,5,5,'#70885b'],[20,3,5,5,'#70885b'],[10,12,4,4,P.black],[19,12,4,4,P.black],[8,22,18,7,P.brown],[2,17,5,12,'#70885b'],[27,17,4,12,'#70885b'],[9,29,5,3,P.outline],[20,29,5,3,P.outline]] },
   enemy_dragon: { bg: 'none', pixels: [[6,11,20,10,P.red],[3,8,8,8,P.red],[22,7,6,5,P.orange],[10,4,4,7,P.red],[16,4,4,7,P.red],[6,20,16,6,P.red],[23,18,6,3,P.red],[8,26,4,5,P.outline],[19,26,4,5,P.outline],[5,11,2,2,P.gold],[2,5,4,3,P.gold]] },
+  enemy_yeast_bloat: { bg: 'none', pixels: [[7,10,18,16,P.cream],[5,14,22,10,'#ffe8bd'],[10,8,5,5,P.mint],[18,7,4,6,P.mint],[11,17,3,3,P.black],[20,17,3,3,P.black],[13,23,8,2,P.brown],[6,24,4,4,P.orange],[23,23,4,4,P.orange]] },
+  enemy_soup_witch: { bg: 'none', pixels: [[8,4,16,5,P.purple],[6,9,20,5,P.purple],[10,11,12,5,P.green],[8,16,16,12,P.purple],[4,20,5,8,P.brown],[23,20,5,8,P.brown],[12,24,8,3,P.mint],[13,28,3,3,P.outline],[19,28,3,3,P.outline]] },
+  enemy_boiler_golem: { bg: 'none', pixels: [[6,7,20,17,P.grey],[8,4,16,5,P.dark],[9,12,4,4,P.orange],[20,12,4,4,P.orange],[7,22,18,5,P.red],[3,14,5,11,P.grey],[25,14,4,11,P.grey],[10,27,4,4,P.outline],[19,27,4,4,P.outline]] },
+  enemy_salt_crab_king: { bg: 'none', pixels: [[7,13,18,10,P.red],[5,10,6,6,P.red],[21,10,6,6,P.red],[10,15,3,3,P.black],[19,15,3,3,P.black],[2,16,6,3,P.orange],[24,16,6,3,P.orange],[4,23,5,5,P.red],[22,23,5,5,P.red],[12,9,8,3,P.gold]] },
   summon_dough: { bg: 'none', pixels: [[7,13,18,12,P.cream],[5,16,22,8,P.cream],[9,10,14,6,'#ffe8bd'],[11,17,3,3,P.black],[19,17,3,3,P.black],[14,22,6,2,P.brown],[8,25,4,3,P.outline],[21,25,4,3,P.outline]] },
   item_potion: { bg: 'none', pixels: [[13,5,6,5,P.grey],[10,10,12,3,P.white],[9,13,14,15,P.red],[11,16,10,8,'#ff7777'],[12,28,8,2,P.outline]] },
   item_bread: { bg: 'none', pixels: [[7,14,18,11,'#c9823b'],[9,10,14,7,'#e3a857'],[10,13,3,2,P.white],[16,12,3,2,P.white],[21,14,2,2,P.white]] },
   item_sword: { bg: 'none', pixels: [[15,3,3,18,P.grey],[13,20,7,3,P.gold],[14,23,5,6,P.brown],[13,29,7,2,P.outline],[18,5,2,12,P.white]] },
   item_armor: { bg: 'none', pixels: [[8,7,16,5,P.grey],[6,12,20,14,P.grey],[10,15,12,11,'#7f8a99'],[8,26,16,3,P.outline],[13,9,6,18,P.white]] },
-  item_scroll: { bg: 'none', pixels: [[8,7,16,19,P.white],[6,9,4,4,P.gold],[22,21,4,4,P.gold],[11,12,10,2,P.red],[11,17,9,2,P.red],[11,22,8,2,P.red]] }
+  item_scroll: { bg: 'none', pixels: [[8,7,16,19,P.white],[6,9,4,4,P.gold],[22,21,4,4,P.gold],[11,12,10,2,P.red],[11,17,9,2,P.red],[11,22,8,2,P.red]] },
+  item_chili_oil: { bg: 'none', pixels: [[11,6,10,5,P.grey],[9,11,14,15,P.orange],[11,14,10,8,P.red],[8,25,16,3,P.outline],[15,4,3,4,P.gold]] },
+  item_plum_ice: { bg: 'none', pixels: [[9,8,14,18,P.blue],[11,5,10,5,P.grey],[12,12,8,9,'#bcecff'],[7,18,4,4,P.white],[21,18,4,4,P.white],[11,26,10,3,P.outline]] },
+  item_yeast_powder: { bg: 'none', pixels: [[8,7,16,20,P.cream],[10,5,12,4,P.brown],[11,13,10,2,P.mint],[11,18,10,2,P.mint],[13,23,6,2,P.brown]] },
+  item_salt_bag: { bg: 'none', pixels: [[8,12,16,14,P.white],[10,8,12,6,P.cream],[7,24,18,4,P.outline],[12,15,3,3,P.blue],[18,17,3,3,P.blue],[15,21,3,3,P.blue]] },
+  item_thick_soup: { bg: 'none', pixels: [[7,14,18,10,P.brown],[5,12,22,5,P.grey],[9,10,14,4,P.orange],[10,17,12,5,P.gold],[8,24,4,4,P.outline],[20,24,4,4,P.outline]] }
 };
 
 function svgFor(def) {

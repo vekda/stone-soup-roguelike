@@ -118,6 +118,16 @@ function temporaryDefense(player) {
 
 function killEnemy(state, enemy) {
   state.enemies = state.enemies.filter((e) => e !== enemy);
+  if (enemy.ability === 'deathBurst') {
+    const dmg = enemy.burstDamage ?? 4;
+    if (distance(enemy, state.player) <= 1) {
+      state.player.hp -= Math.max(1, dmg - activeDamageReduction(state.player));
+      addLog(state, `${enemy.name}爆裂，热气伤到你。`);
+    }
+    for (const summon of state.summons) {
+      if (distance(enemy, summon) <= 1) summon.hp -= dmg;
+    }
+  }
   state.player.xp += enemy.xp;
   addLog(state, `${enemy.name}倒下了。获得 ${enemy.xp} 经验。`);
   const need = state.player.level * 18;
@@ -168,6 +178,30 @@ export function useItem(state, index) {
     targets.forEach((e) => { e.hp -= item.damage; });
     addLog(state, `${item.name}爆燃，${targets.length} 个敌人受到 ${item.damage} 点伤害。`);
     [...targets].forEach((e) => { if (e.hp <= 0) killEnemy(state, e); });
+  } else if (item.kind === 'blast') {
+    const targets = state.enemies.filter((e) => distance(e, state.player) <= (item.radius ?? 1));
+    targets.forEach((e) => { e.hp -= item.damage; });
+    addLog(state, `${item.name}泼洒开来，${targets.length} 个敌人受到 ${item.damage} 点伤害。`);
+    [...targets].forEach((e) => { if (e.hp <= 0) killEnemy(state, e); });
+  } else if (item.kind === 'guard') {
+    state.player.effects = state.player.effects.filter((e) => e.id !== item.id);
+    state.player.effects.push({ id: item.id, name: item.name, turns: item.turns ?? 3, defenseBonus: item.defenseBonus ?? 1 });
+    addLog(state, `${item.name}让你暂时稳住阵脚。`);
+  } else if (item.kind === 'summon') {
+    const spot = adjacentOpenSquares(state, state.player)[0];
+    if (spot) {
+      state.summons.push({ id: `powder-dough-${Date.now()}-${state.rng.int(1, 9999)}`, name: '临时面团', hp: 8 + state.player.level, maxHp: 8 + state.player.level, attack: Math.max(1, state.player.attack - 1), defense: 0, sprite: 'summon_dough', x: spot.x, y: spot.y, temporary: true });
+      addLog(state, `${item.name}鼓成一个临时面团。`);
+    } else {
+      addLog(state, `${item.name}没有找到发酵空间。`);
+    }
+  } else if (item.kind === 'cleanse') {
+    state.player.effects = state.player.effects.filter((e) => e.id === 'guard' || e.defenseBonus);
+    addLog(state, `${item.name}净化了身上的异味。`);
+  } else if (item.kind === 'heal_guard') {
+    state.player.hp = Math.min(state.player.maxHp, state.player.hp + item.amount);
+    state.player.effects.push({ id: item.id, name: item.name, turns: item.turns ?? 2, defenseBonus: item.defenseBonus ?? 1 });
+    addLog(state, `${item.name}又暖又稠，回复生命并增加防御。`);
   }
   removeDeadSummons(state);
   checkGameOver(state);
@@ -308,6 +342,7 @@ function enemyTurn(state) {
   const occupied = new Set(state.enemies.map((e) => key(e.x, e.y)));
   for (const enemy of state.enemies) {
     if (state.status !== 'playing') return;
+    if (enemy.ability === 'healAlly' && healEnemyAlly(state, enemy)) continue;
     const adjacentSummon = state.summons.find((s) => distance(enemy, s) === 1);
     if (adjacentSummon) {
       attack(state, enemy, adjacentSummon);
@@ -337,6 +372,17 @@ function enemyTurn(state) {
       }
     }
   }
+}
+
+function healEnemyAlly(state, healer) {
+  const target = state.enemies
+    .filter((e) => e !== healer && e.hp < e.maxHp && distance(e, healer) <= 5)
+    .sort((a, b) => (a.hp / a.maxHp) - (b.hp / b.maxHp))[0];
+  if (!target) return false;
+  const amount = healer.healAmount ?? 4;
+  target.hp = Math.min(target.maxHp, target.hp + amount);
+  addLog(state, `${healer.name}给${target.name}续上一勺热汤。`);
+  return true;
 }
 
 function chooseEnemyTarget(state, enemy) {
