@@ -1,0 +1,21 @@
+export const sprites = {
+  "tile_floor": "/assets/tile_floor.svg",
+  "tile_wall": "/assets/tile_wall.svg",
+  "tile_stairs": "/assets/tile_stairs.svg",
+  "hero_fighter": "/assets/hero_fighter.svg",
+  "hero_mage": "/assets/hero_mage.svg",
+  "hero_rogue": "/assets/hero_rogue.svg",
+  "hero_healer": "/assets/hero_healer.svg",
+  "hero_summoner": "/assets/hero_summoner.svg",
+  "enemy_rat": "/assets/enemy_rat.svg",
+  "enemy_goblin": "/assets/enemy_goblin.svg",
+  "enemy_orc": "/assets/enemy_orc.svg",
+  "enemy_troll": "/assets/enemy_troll.svg",
+  "enemy_dragon": "/assets/enemy_dragon.svg",
+  "summon_dough": "/assets/summon_dough.svg",
+  "item_potion": "/assets/item_potion.svg",
+  "item_bread": "/assets/item_bread.svg",
+  "item_sword": "/assets/item_sword.svg",
+  "item_armor": "/assets/item_armor.svg",
+  "item_scroll": "/assets/item_scroll.svg"
+};
